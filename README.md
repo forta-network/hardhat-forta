@@ -1,58 +1,50 @@
-# Hardhat TypeScript plugin boilerplate
+# Hardhat Forta plugin
 
-This is a sample Hardhat plugin written in TypeScript. Creating a Hardhat plugin
-can be as easy as extracting a part of your config into a different file and
-publishing it to npm.
-
-This sample project contains an example on how to do that, but also comes with
-many more features:
-
-- A mocha test suite ready to use
-- TravisCI already setup
-- A package.json with scripts and publishing info
-- Examples on how to do different things
+This is a Hardhat plugin that exposes access to the Forta CLI through hardhat,
+allowing forta agent project management. More features to come!
 
 ## Installation
 
 To start working on your project, just run
 
 ```bash
-npm install
+npm install https://github.com/NethermindEth/Forta-agent-hardhat-plugin.git
 ```
 
-## Plugin development
+for now.
 
-Make sure to read our [Plugin Development Guide](https://hardhat.org/advanced/building-plugins.html) to learn how to build a plugin.
+Import the plugin in your `hardhat.config.js`:
 
-## Testing
+```js
+require("Forta-agent-hardhat-plugin");
+```
 
-Running `npm run test` will run every test located in the `test/` folder. They
-use [mocha](https://mochajs.org) and [chai](https://www.chaijs.com/),
-but you can customize them.
+Or if you are using TypeScript, in your `hardhat.config.ts`:
 
-We recommend creating unit tests for your own modules, and integration tests for
-the interaction of the plugin with Hardhat and its dependencies.
+```ts
+import "Forta-agent-hardhat-plugin";
+```
 
-## Linting and autoformat
+## Tasks (TODO)
 
-All of Hardhat projects use [prettier](https://prettier.io/) and
-[tslint](https://palantir.github.io/tslint/).
+This plugin adds the following tasks to Hardhat:
 
-You can check if your code style is correct by running `npm run lint`, and fix
-it with `npm run lint:fix`.
+## Environment extensions
 
-## Building the project
+This plugin does not extend the environment.
 
-Just run `npm run build` ️👷
+## Configuration
 
-## README file
+This plugin adds an optional `forta` entry to Hardhat's config, which allows specifying the context path used by the Forta utilities.
 
-This README describes this boilerplate project, but won't be very useful to your
-plugin users.
+```js
+module.exports = {
+  forta: {
+    contextPath: "./agent"
+  }
+}
+```
 
-Take a look at `README-TEMPLATE.md` for an example of what a Hardhat plugin's
-README should look like.
+## Usage
 
-## Migrating from Buidler?
-
-Take a look at [the migration guide](MIGRATION.md)!
+All of the tasks can be called through `npx hardhat <task>` inside the Hardhat project.
