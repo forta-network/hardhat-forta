@@ -45,5 +45,8 @@
   },
   "peerDependencies": {
     "hardhat": "^2.0.0"
+  },
+  "dependencies": {
+    "forta-agent": "file:forta-agent-0.0.39.tgz"
   }
 }
