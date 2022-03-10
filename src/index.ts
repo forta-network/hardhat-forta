@@ -45,6 +45,6 @@ task("forta-agent:publish")
   .setAction(async (taskArgs, { config }) => {
     await executeFortaCliCommand("publish", {
       contextPath: config.forta.contextPath,
-      config: taskArgs["config-file"],
+      config: taskArgs.configFile,
     });
   });
