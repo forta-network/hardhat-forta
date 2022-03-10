@@ -8,6 +8,7 @@ import "./type-extensions";
 extendConfig(
   (config: HardhatConfig, userConfig: Readonly<HardhatUserConfig>) => {
     const contextPath = userConfig.forta?.contextPath;
+    config.forta = config.forta || {};
 
     let normalizedPath: string;
     if (!contextPath) {
