@@ -41,11 +41,7 @@ task("forta-agent:init")
 // its own parameter names
 task("forta-agent:publish")
   .setDescription("Publish the Forta Agent to the network")
-  .addOptionalParam(
-    "configFile",
-    "Specify a config file",
-    "forta.config.json"
-  )
+  .addOptionalParam("configFile", "Specify a config file", "forta.config.json")
   .setAction(async (taskArgs, { config }) => {
     await executeFortaCliCommand("publish", {
       contextPath: config.forta.contextPath,
