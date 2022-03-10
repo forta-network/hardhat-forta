@@ -8,9 +8,10 @@ export type CommandName =
   | "disable"
   | "enable"
   | "keyfile";
+
 export type CommandHandler = (args?: any) => Promise<void>;
 
-export async function executeCommand(
+export async function executeFortaCliCommand(
   cliCommandName: CommandName,
   cliArgs: any
 ) {

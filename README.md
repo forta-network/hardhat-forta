@@ -44,6 +44,35 @@ import "forta-agent-hardhat-plugin";
 
 This plugin adds the following tasks to Hardhat:
 
+- `forta-agent:init`
+
+  Similar to `forta-agent init`.
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta-agent:init [--python] [--typescript]
+
+  OPTIONS:
+
+    --python      Initialize as Python project
+    --typescript  Initialize as Typescript project
+
+  forta-agent:init: Initialize a Forta Agent project
+  ```
+
+- `forta-agent:publish`
+
+  Similar to `forta-agent publish`.
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta-agent:publish [--config-file <STRING>]
+
+  OPTIONS:
+
+    --config-file Specify a config file (default: "forta.config.json")
+
+  forta-agent:publish: Publish the Forta Agent to the network
+  ```
+
 ## Environment extensions
 
 This plugin does not extend the environment.
@@ -55,7 +84,7 @@ This plugin adds an optional `forta` entry to Hardhat's config, which allows spe
 ```js
 module.exports = {
   forta: {
-    contextPath: "./agent"
+    contextPath: "my_agent" // default: "agent"
   }
 }
 ```
