@@ -6,26 +6,12 @@ allowing forta agent project management. More features to come!
 ## Installation
 
 For now, since this plugin isn't yet deployed, you can build the package, pack
-it and then install it in a hardhat project. To do that, you'll also need to
-get the tarball version of the `expose-cli-commands` branch of the
-`forta-agent` package.
+it and then install it in a hardhat project.
 
 ```bash
 # Cloning the plugin
 git clone https://github.com/NethermindEth/Forta-agent-hardhat-plugin.git
 cd Forta-agent-hardhat-plugin
-
-# Building forta-agent-sdk expose-cli-commands branch
-git clone https://github.com/forta-protocol/forta-agent-sdk.git
-cd forta-agent-sdk
-git checkout expose-cli-commands
-npm install
-npm run build
-npm pack
-
-# Placing the tarball in the plugin folder
-mv forta-agent-0.0.39.tgz ..
-cd ..
 
 # Building the plugin
 npm install
