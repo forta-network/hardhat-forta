@@ -20,7 +20,7 @@ export async function executeFortaCliCommand(
     const command = diContainer.resolve<CommandHandler>(cliCommandName);
     await command();
   } catch (e) {
-    console.error(`ERROR: ${e}`);
+    console.error(`Error while running forta agent cli command: ${e}`);
     process.exit();
   }
 }
