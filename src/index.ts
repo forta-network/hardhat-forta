@@ -3,12 +3,12 @@ import { HardhatConfig, HardhatUserConfig } from "hardhat/types";
 import path from "path";
 
 import { executeFortaCliCommand } from "./forta-cli";
+import { generateAgent } from "./templates";
 import "./type-extensions";
 
 extendConfig(
   (config: HardhatConfig, userConfig: Readonly<HardhatUserConfig>) => {
     const contextPath = userConfig.forta?.contextPath;
-    config.forta = config.forta || {};
 
     let normalizedPath: string;
     if (!contextPath) {
@@ -23,7 +23,9 @@ extendConfig(
       }
     }
 
-    config.forta.contextPath = normalizedPath;
+    config.forta = {
+      contextPath: normalizedPath,
+    };
   }
 );
 
@@ -48,4 +50,14 @@ task("forta-agent:publish")
       contextPath: config.forta.contextPath,
       config: taskArgs.configFile,
     });
+  });
+
+task("forta-agent:generate")
+  .setDescription("Generate an agent project based on templates")
+  .setAction(async (taskArgs, { config }) => {
+    try {
+      await generateAgent(config.forta.contextPath);
+    } catch (err) {
+      console.error(`Error while generating agent project: ${err}`);
+    }
   });
