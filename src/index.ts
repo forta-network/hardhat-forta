@@ -50,7 +50,7 @@ task("forta-agent:run")
   .addOptionalParam("block", "Run with the specified block hash/number")
   .addOptionalParam("range", "Run with the specified block range (e.g. 15..20)")
   .addOptionalParam("file", "Run with the specified json file")
-  .addOptionalParam(
+  .addFlag(
     "prod",
     "Run a server listening for events from a Forta Scanner"
   )
