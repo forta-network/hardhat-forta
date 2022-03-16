@@ -39,7 +39,6 @@ task("forta-agent:init")
     });
   });
 
-
 // hardhat doesn't allow a parameter named "config" since it clashes with
 // its own parameter names
 
@@ -50,10 +49,7 @@ task("forta-agent:run")
   .addOptionalParam("block", "Run with the specified block hash/number")
   .addOptionalParam("range", "Run with the specified block range (e.g. 15..20)")
   .addOptionalParam("file", "Run with the specified json file")
-  .addFlag(
-    "prod",
-    "Run a server listening for events from a Forta Scanner"
-  )
+  .addFlag("prod", "Run a server listening for events from a Forta Scanner")
   .addOptionalParam("configFile", "Specify a config file", "forta.config.json")
   .addFlag(
     "nocache",
@@ -71,7 +67,7 @@ task("forta-agent:run")
       nocache: taskArgs.nocache,
     });
   });
-  
+
 // Publish Task
 task("forta-agent:publish")
   .setDescription("Publish the Forta Agent to the network")

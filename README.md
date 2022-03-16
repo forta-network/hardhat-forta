@@ -83,6 +83,65 @@ This plugin adds the following tasks to Hardhat:
   forta-agent:publish: Publish the Forta Agent to the network
   ```
 
+- `forta-agent:run`
+
+  Similar to `forta-agent run`.
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta-agent:run --block <STRING> [--config-file <STRING>] --file <STRING> [--nocache] --prod <STRING> --range <STRING> --tx <STRING>
+
+  OPTIONS:
+
+   --block       Run with the specified block hash/number 
+   --config-file Specify a config file (default: "forta.config.json")
+   --file        Run with the specified json file 
+   --nocache     Disables writing to the cache (but reads are still enabled) 
+   --prod        Run a server listening for events from a Forta Scanner 
+   --range       Run with the specified block range (e.g. 15..20) 
+   --tx          Run with the specified transaction hash 
+
+  forta-agent:run: Run the Forta Agent with latest blockchain data
+  ```
+- `forta-agent:push`
+
+  Similar to `forta-agent push`.
+
+  ```
+  Usage:hardhat [GLOBAL OPTIONS] forta-agent:push [--config-file <STRING>]
+
+  OPTIONS:
+
+  --config-file Specify a config file (default: "forta.config.json")
+
+  forta-agent:push: Push the Forta Agent image to the repository
+  ```
+- `forta-agent:disable`
+
+  Similar to `forta-agent disable`.
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta-agent:disable
+
+  forta-agent:disable: Disables the Forta Agent
+  ```
+- `forta-agent:enable`
+
+  Similar to `forta-agent enable`.
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta-agent:enable
+
+  forta-agent:enable: Enables the Forta Agent
+  ```
+- `forta-agent:keyfile`
+
+  Similar to `forta-agent keyfile`.
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta-agent:keyfile
+
+  forta-agent:keyfile: Prints out keyfile information
+  ```      
 ## Environment extensions
 
 This plugin does not extend the environment.
