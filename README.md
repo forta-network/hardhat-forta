@@ -1,7 +1,9 @@
 # Hardhat Forta plugin
 
 This is a Hardhat plugin that exposes access to the Forta CLI through hardhat,
-allowing forta agent project management. More features to come!
+allowing forta agent project management. It also features a tool to generate
+agent projects based on [forta-agent-templates](https://github.com/arbitraryexecution/forta-agent-templates)
+templates.
 
 ## Installation
 
@@ -36,7 +38,7 @@ Or if you are using TypeScript, in your `hardhat.config.ts`:
 import "forta-agent-hardhat-plugin";
 ```
 
-## Tasks (WIP)
+## Tasks
 
 This plugin adds the following tasks to Hardhat:
 
