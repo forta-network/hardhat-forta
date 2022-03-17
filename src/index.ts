@@ -119,9 +119,10 @@ task("forta-agent:keyfile")
     });
   });
 
+// Generate Task
 task("forta-agent:generate")
   .setDescription("Generate an agent project based on templates")
-  .setAction(async (taskArgs, { config }) => {
+  .setAction(async (_, { config }) => {
     try {
       await generateAgent(config.forta.contextPath);
     } catch (err) {
