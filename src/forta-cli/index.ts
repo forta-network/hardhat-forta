@@ -1,4 +1,5 @@
 import { configureContainer } from "forta-agent";
+
 import { CommandArgs } from "./types";
 
 type CommandHandler = (args?: any) => Promise<void>;
