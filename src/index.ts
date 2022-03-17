@@ -58,7 +58,7 @@ task("forta-agent:run")
     "Disables writing to the cache (but reads are still enabled)"
   )
   .setAction(async (taskArgs, { config }) => {
-    await executeFortaCliCommand("init", {
+    await executeFortaCliCommand("run", {
       contextPath: config.forta.contextPath,
       tx: taskArgs.tx,
       block: taskArgs.block,
