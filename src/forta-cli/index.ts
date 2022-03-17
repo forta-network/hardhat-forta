@@ -1,19 +1,11 @@
 import { configureContainer } from "forta-agent";
-
-export type CommandName =
-  | "init"
-  | "run"
-  | "publish"
-  | "push"
-  | "disable"
-  | "enable"
-  | "keyfile";
+import { CommandArgs } from "./types";
 
 export type CommandHandler = (args?: any) => Promise<void>;
 
-export async function executeFortaAgentCliCommand(
-  cliCommandName: CommandName,
-  cliArgs: any
+export async function executeFortaAgentCliCommand<T extends keyof CommandArgs>(
+  cliCommandName: T,
+  cliArgs: CommandArgs[T]
 ) {
   try {
     const diContainer = configureContainer({ ...cliArgs, cliCommandName });
