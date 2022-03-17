@@ -11,7 +11,7 @@ export type CommandName =
 
 export type CommandHandler = (args?: any) => Promise<void>;
 
-export async function executeFortaCliCommand(
+export async function executeFortaAgentCliCommand(
   cliCommandName: CommandName,
   cliArgs: any
 ) {
