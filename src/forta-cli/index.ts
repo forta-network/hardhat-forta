@@ -1,7 +1,7 @@
 import { configureContainer } from "forta-agent";
 import { CommandArgs } from "./types";
 
-export type CommandHandler = (args?: any) => Promise<void>;
+type CommandHandler = (args?: any) => Promise<void>;
 
 export async function executeFortaAgentCliCommand<T extends keyof CommandArgs>(
   cliCommandName: T,
