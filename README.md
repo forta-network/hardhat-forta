@@ -69,13 +69,23 @@ This plugin adds the following tasks to Hardhat:
   forta-agent:publish: Publish the Forta Agent to the network
   ```
 
+- `forta-agent:generate`
+
+  Generates an agent project based on the [forta-agent-templates](https://github.com/arbitraryexecution/forta-agent-templates) repository templates.
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta-agent:generate
+
+  forta-agent:generate: Generate an agent project based on templates
+  ```
+
 ## Environment extensions
 
 This plugin does not extend the environment.
 
 ## Configuration
 
-This plugin adds an optional `forta` entry to Hardhat's config, which allows specifying the context path used by the Forta utilities.
+This plugin adds an optional `forta` entry to Hardhat's config, which allows specifying the context path used by the Forta Agent utilities.
 
 ```js
 module.exports = {

@@ -34,6 +34,10 @@
     "@types/glob": "^7.2.0",
     "@types/mocha": "^5.2.6",
     "@types/node": "^8.10.38",
+    "@types/node-fetch": "^2.6.1",
+    "@types/prompts": "^2.0.14",
+    "@types/shelljs": "^0.8.11",
+    "@types/string-template": "^1.0.2",
     "chai": "^4.2.0",
     "hardhat": "^2.0.0",
     "mocha": "^7.1.2",
@@ -48,6 +52,11 @@
     "hardhat": "^2.0.0"
   },
   "dependencies": {
-    "forta-agent": "file:forta-agent-0.0.39.tgz"
+    "forta-agent": "file:forta-agent-0.0.39.tgz",
+    "kleur": "^4.1.4",
+    "node-fetch": "^2.6.7",
+    "prompts": "^2.4.2",
+    "shelljs": "^0.8.5",
+    "string-template": "^1.0.0"
   }
 }
