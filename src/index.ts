@@ -117,6 +117,7 @@ task("forta-agent:keyfile")
     await executeFortaCliCommand("keyfile", {
       contextPath: config.forta.contextPath,
     });
+  });
 
 task("forta-agent:generate")
   .setDescription("Generate an agent project based on templates")
