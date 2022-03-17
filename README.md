@@ -6,26 +6,12 @@ allowing forta agent project management. More features to come!
 ## Installation
 
 For now, since this plugin isn't yet deployed, you can build the package, pack
-it and then install it in a hardhat project. To do that, you'll also need to
-get the tarball version of the `expose-cli-commands` branch of the
-`forta-agent` package.
+it and then install it in a hardhat project.
 
 ```bash
 # Cloning the plugin
 git clone https://github.com/NethermindEth/Forta-agent-hardhat-plugin.git
 cd Forta-agent-hardhat-plugin
-
-# Building forta-agent-sdk expose-cli-commands branch
-git clone https://github.com/forta-protocol/forta-agent-sdk.git
-cd forta-agent-sdk
-git checkout expose-cli-commands
-npm install
-npm run build
-npm pack
-
-# Placing the tarball in the plugin folder
-mv forta-agent-0.0.39.tgz ..
-cd ..
 
 # Building the plugin
 npm install
@@ -142,13 +128,24 @@ This plugin adds the following tasks to Hardhat:
 
   forta-agent:keyfile: Prints out keyfile information
   ```      
+
+- `forta-agent:generate`
+
+  Generates an agent project based on the [forta-agent-templates](https://github.com/arbitraryexecution/forta-agent-templates) repository templates.
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta-agent:generate
+
+  forta-agent:generate: Generate an agent project based on templates
+  ```
+
 ## Environment extensions
 
 This plugin does not extend the environment.
 
 ## Configuration
 
-This plugin adds an optional `forta` entry to Hardhat's config, which allows specifying the context path used by the Forta utilities.
+This plugin adds an optional `forta` entry to Hardhat's config, which allows specifying the context path used by the Forta Agent utilities.
 
 ```js
 module.exports = {
