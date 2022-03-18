@@ -1,7 +1,9 @@
 # Hardhat Forta plugin
 
-This is a Hardhat plugin that exposes access to the Forta CLI through hardhat,
-allowing forta agent project management. More features to come!
+This is a Hardhat plugin that exposes access to the [Forta Agent CLI](https://docs.forta.network/en/latest/cli/)
+through hardhat, allowing forta agent project management. It also features a
+tool to generate agent projects based on [forta-agent-templates](https://github.com/arbitraryexecution/forta-agent-templates)
+templates.
 
 ## Installation
 
@@ -36,13 +38,13 @@ Or if you are using TypeScript, in your `hardhat.config.ts`:
 import "forta-agent-hardhat-plugin";
 ```
 
-## Tasks (WIP)
+## Tasks
 
 This plugin adds the following tasks to Hardhat:
 
 - `forta-agent:init`
 
-  Similar to `forta-agent init`.
+  Similar to [`forta-agent init`](https://docs.forta.network/en/latest/cli/#init).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta-agent:init [--python] [--typescript]
@@ -57,7 +59,7 @@ This plugin adds the following tasks to Hardhat:
 
 - `forta-agent:publish`
 
-  Similar to `forta-agent publish`.
+  Similar to [`forta-agent publish`](https://docs.forta.network/en/latest/cli/#publish).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta-agent:publish [--config-file <STRING>]
@@ -71,7 +73,7 @@ This plugin adds the following tasks to Hardhat:
 
 - `forta-agent:run`
 
-  Similar to `forta-agent run`.
+  Similar to [`forta-agent run`](https://docs.forta.network/en/latest/cli/#run).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta-agent:run --block <STRING> [--config-file <STRING>] --file <STRING> [--nocache] --prod <STRING> --range <STRING> --tx <STRING>
@@ -90,7 +92,7 @@ This plugin adds the following tasks to Hardhat:
   ```
 - `forta-agent:push`
 
-  Similar to `forta-agent push`.
+  Similar to [`forta-agent push`](https://docs.forta.network/en/latest/cli/#push).
 
   ```
   Usage:hardhat [GLOBAL OPTIONS] forta-agent:push [--config-file <STRING>]
@@ -103,7 +105,7 @@ This plugin adds the following tasks to Hardhat:
   ```
 - `forta-agent:disable`
 
-  Similar to `forta-agent disable`.
+  Similar to [`forta-agent disable`](https://docs.forta.network/en/latest/cli/#disable).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta-agent:disable
@@ -112,7 +114,7 @@ This plugin adds the following tasks to Hardhat:
   ```
 - `forta-agent:enable`
 
-  Similar to `forta-agent enable`.
+  Similar to [`forta-agent enable`](https://docs.forta.network/en/latest/cli/#enable).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta-agent:enable
@@ -121,7 +123,7 @@ This plugin adds the following tasks to Hardhat:
   ```
 - `forta-agent:keyfile`
 
-  Similar to `forta-agent keyfile`.
+  Similar to [`forta-agent keyfile`](https://docs.forta.network/en/latest/cli/#keyfile).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta-agent:keyfile

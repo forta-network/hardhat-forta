@@ -1,6 +1,6 @@
 {
   "name": "forta-agent-hardhat-plugin",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha",
   "description": "Forta Agent Hardhat Plugin",
   "repository": "github:NethermindEth/Forta-agent-hardhat-plugin",
   "author": "NethermindEth",

@@ -2,7 +2,7 @@ import { extendConfig, task } from "hardhat/config";
 import { HardhatConfig, HardhatUserConfig } from "hardhat/types";
 import path from "path";
 
-import { executeFortaCliCommand } from "./forta-cli";
+import { executeFortaAgentCliCommand } from "./forta-cli";
 import { generateAgent } from "./templates";
 import "./type-extensions";
 
@@ -35,7 +35,7 @@ task("forta-agent:init")
   .addFlag("typescript", "Initialize as Typescript project")
   .addFlag("python", "Initialize as Python project")
   .setAction(async (taskArgs, { config }) => {
-    await executeFortaCliCommand("init", {
+    await executeFortaAgentCliCommand("init", {
       contextPath: config.forta.contextPath,
       ...taskArgs,
     });
@@ -58,7 +58,7 @@ task("forta-agent:run")
     "Disables writing to the cache (but reads are still enabled)"
   )
   .setAction(async (taskArgs, { config }) => {
-    await executeFortaCliCommand("init", {
+    await executeFortaAgentCliCommand("run", {
       contextPath: config.forta.contextPath,
       tx: taskArgs.tx,
       block: taskArgs.block,
@@ -75,7 +75,7 @@ task("forta-agent:publish")
   .setDescription("Publish the Forta Agent to the network")
   .addOptionalParam("configFile", "Specify a config file", "forta.config.json")
   .setAction(async (taskArgs, { config }) => {
-    await executeFortaCliCommand("publish", {
+    await executeFortaAgentCliCommand("publish", {
       contextPath: config.forta.contextPath,
       config: taskArgs.configFile,
     });
@@ -86,7 +86,7 @@ task("forta-agent:push")
   .setDescription("Push the Forta Agent image to the repository")
   .addOptionalParam("configFile", "Specify a config file", "forta.config.json")
   .setAction(async (taskArgs, { config }) => {
-    await executeFortaCliCommand("push", {
+    await executeFortaAgentCliCommand("push", {
       contextPath: config.forta.contextPath,
       config: taskArgs.configFile,
     });
@@ -96,7 +96,7 @@ task("forta-agent:push")
 task("forta-agent:disable")
   .setDescription("Disables the Forta Agent")
   .setAction(async (_, { config }) => {
-    await executeFortaCliCommand("disable", {
+    await executeFortaAgentCliCommand("disable", {
       contextPath: config.forta.contextPath,
     });
   });
@@ -105,7 +105,7 @@ task("forta-agent:disable")
 task("forta-agent:enable")
   .setDescription("Enables the Forta Agent")
   .setAction(async (_, { config }) => {
-    await executeFortaCliCommand("enable", {
+    await executeFortaAgentCliCommand("enable", {
       contextPath: config.forta.contextPath,
     });
   });
@@ -114,13 +114,15 @@ task("forta-agent:enable")
 task("forta-agent:keyfile")
   .setDescription("Prints out keyfile information")
   .setAction(async (_, { config }) => {
-    await executeFortaCliCommand("keyfile", {
+    await executeFortaAgentCliCommand("keyfile", {
       contextPath: config.forta.contextPath,
     });
+  });
 
+// Generate Task
 task("forta-agent:generate")
   .setDescription("Generate an agent project based on templates")
-  .setAction(async (taskArgs, { config }) => {
+  .setAction(async (_, { config }) => {
     try {
       await generateAgent(config.forta.contextPath);
     } catch (err) {
