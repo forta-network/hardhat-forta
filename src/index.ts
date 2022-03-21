@@ -3,6 +3,7 @@ import { HardhatConfig, HardhatUserConfig } from "hardhat/types";
 import path from "path";
 
 import { executeFortaAgentCliCommand } from "./forta-cli";
+import { chooseAgent } from "./forta-cli/agents";
 import { generateAgent } from "./templates";
 import "./type-extensions";
 
@@ -59,7 +60,7 @@ task("forta-agent:run")
   )
   .setAction(async (taskArgs, { config }) => {
     await executeFortaAgentCliCommand("run", {
-      contextPath: config.forta.contextPath,
+      contextPath: await chooseAgent(config.forta.contextPath),
       tx: taskArgs.tx,
       block: taskArgs.block,
       range: taskArgs.range,
@@ -76,7 +77,7 @@ task("forta-agent:publish")
   .addOptionalParam("configFile", "Specify a config file", "forta.config.json")
   .setAction(async (taskArgs, { config }) => {
     await executeFortaAgentCliCommand("publish", {
-      contextPath: config.forta.contextPath,
+      contextPath: await chooseAgent(config.forta.contextPath),
       config: taskArgs.configFile,
     });
   });
@@ -87,7 +88,7 @@ task("forta-agent:push")
   .addOptionalParam("configFile", "Specify a config file", "forta.config.json")
   .setAction(async (taskArgs, { config }) => {
     await executeFortaAgentCliCommand("push", {
-      contextPath: config.forta.contextPath,
+      contextPath: await chooseAgent(config.forta.contextPath),
       config: taskArgs.configFile,
     });
   });
@@ -97,7 +98,7 @@ task("forta-agent:disable")
   .setDescription("Disables the Forta Agent")
   .setAction(async (_, { config }) => {
     await executeFortaAgentCliCommand("disable", {
-      contextPath: config.forta.contextPath,
+      contextPath: await chooseAgent(config.forta.contextPath),
     });
   });
 
@@ -106,7 +107,7 @@ task("forta-agent:enable")
   .setDescription("Enables the Forta Agent")
   .setAction(async (_, { config }) => {
     await executeFortaAgentCliCommand("enable", {
-      contextPath: config.forta.contextPath,
+      contextPath: await chooseAgent(config.forta.contextPath),
     });
   });
 
