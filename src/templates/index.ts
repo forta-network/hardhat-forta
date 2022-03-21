@@ -59,39 +59,42 @@ function pathHasFiles(pathStr: string) {
 }
 
 /**
- * Generates an agent based on the available templates in the
- * arbitraryexecution/forta-agent-templates github repository.
- * @param destinationPath - The path in which the forta agent project will
- *  be placed.
+ * Checks if destinationPath is empty or not and, if not, notifies the user
+ * and asks for confirmation.
+ * @param destinationPath - Path to be checked.
+ * @returns A boolean indicating whether the user agreed to write in the
+ *  specified path.
  */
-export async function generateAgent(destinationPath: string) {
+async function shouldWrite(destinationPath: string): Promise<boolean> {
   if (pathHasFiles(destinationPath)) {
     const response = await prompts({
       type: "confirm",
       name: "shouldContinue",
-      message: `The directory ${destinationPath} is not empty and files may be overwritten. Continue?`,
+      message: `The directory ${underline(
+        destinationPath
+      )} is not empty and files may be overwritten. Continue?`,
     });
 
     if (!response.shouldContinue) {
-      return;
+      return false;
     }
   }
 
-  const availableTemplates = await getTemplates();
+  return true;
+}
 
-  const templatePrompt = await prompts({
-    type: "select",
-    name: "node",
-    message: "Template:",
-    choices: availableTemplates.map((node) => ({
-      title: node.path,
-      value: node,
-      description: getDescription(node.path),
-    })),
-    initial: 0,
-  });
+/**
+ * Fetches an agents files based on its repository tree node.
+ * @param node - Repository tree node with information about the agent folder.
+ * @param destinationPath - Path in which the agent files should be written.
+ */
+async function fetchAgent(node: RepositoryTreeNode, destinationPath: string) {
+  if (!(await shouldWrite(destinationPath))) {
+    console.log(bold("Skipping agent download."));
+    return;
+  }
 
-  const files = await getTemplateFiles(templatePrompt.node);
+  const files = await getTemplateFiles(node);
 
   await Promise.all(
     files.map(
@@ -117,7 +120,7 @@ export async function generateAgent(destinationPath: string) {
     bold(
       `Agent successfully generated at ${underline(
         destinationPath
-      )} using the ${underline(templatePrompt.node.path)} template.`
+      )} using the ${underline(node.path)} template.`
     )
   );
   console.log(
@@ -125,4 +128,34 @@ export async function generateAgent(destinationPath: string) {
       "Configuration instructions are described in the SETUP.md file inside the agent folder."
     )
   );
+}
+
+/**
+ * Generates an agent or more based on the available templates in the
+ * arbitraryexecution/forta-agent-templates github repository.
+ * @param destinationPath - The path in which the forta agent project(s) will
+ *  be placed.
+ */
+export async function generateAgents(destinationPath: string) {
+  const availableTemplates = await getTemplates();
+
+  const templatePrompt = await prompts({
+    type: "multiselect",
+    name: "agents",
+    message: "Templates:",
+    choices: availableTemplates.map((node) => ({
+      title: node.path,
+      value: node,
+      description: getDescription(node.path),
+    })),
+    initial: 0,
+  });
+
+  if (templatePrompt.agents.length === 1) {
+    await fetchAgent(templatePrompt.agents[0], destinationPath);
+  } else {
+    for (const agent of templatePrompt.agents) {
+      await fetchAgent(agent, path.join(destinationPath, agent.path));
+    }
+  }
 }

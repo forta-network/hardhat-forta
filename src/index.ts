@@ -4,7 +4,7 @@ import path from "path";
 
 import { executeFortaAgentCliCommand } from "./forta-cli";
 import { chooseAgent } from "./forta-cli/agents";
-import { generateAgent } from "./templates";
+import { generateAgents } from "./templates";
 import "./type-extensions";
 
 extendConfig(
@@ -125,7 +125,7 @@ task("forta-agent:generate")
   .setDescription("Generate an agent project based on templates")
   .setAction(async (_, { config }) => {
     try {
-      await generateAgent(config.forta.contextPath);
+      await generateAgents(config.forta.contextPath);
     } catch (err) {
       console.error(`Error while generating agent project: ${err}`);
     }
