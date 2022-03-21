@@ -56,7 +56,6 @@
     "kleur": "^4.1.4",
     "node-fetch": "^2.6.7",
     "prompts": "^2.4.2",
-    "shelljs": "^0.8.5",
-    "string-template": "^1.0.0"
+    "shelljs": "^0.8.5"
   }
 }
