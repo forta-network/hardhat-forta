@@ -5,6 +5,7 @@ import path from "path";
 import prompts from "prompts";
 import shelljs from "shelljs";
 
+import { getDescription } from "./descriptions";
 import { DirectoryFile, RepositoryTree, RepositoryTreeNode } from "./types";
 
 /**
@@ -85,6 +86,7 @@ export async function generateAgent(destinationPath: string) {
     choices: availableTemplates.map((node) => ({
       title: node.path,
       value: node,
+      description: getDescription(node.path),
     })),
     initial: 0,
   });
