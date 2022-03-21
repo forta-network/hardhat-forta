@@ -5,26 +5,7 @@ import path from "path";
 import prompts from "prompts";
 import shelljs from "shelljs";
 
-interface RepositoryTreeNode {
-  path: string;
-  mode: string;
-  type: string;
-  sha: string;
-  size?: number;
-  url: string;
-}
-
-interface RepositoryTree {
-  sha: string;
-  url: string;
-  tree: RepositoryTreeNode[];
-  truncated: boolean;
-}
-
-interface DirectoryFile {
-  path: string;
-  url: string;
-}
+import { DirectoryFile, RepositoryTree, RepositoryTreeNode } from "./types";
 
 /**
  * Retrieves the folders in the repository root.
