@@ -90,7 +90,7 @@ async function shouldWrite(destinationPath: string): Promise<boolean> {
  */
 async function fetchAgent(node: RepositoryTreeNode, destinationPath: string) {
   if (!(await shouldWrite(destinationPath))) {
-    console.log(bold("Skipping agent download."));
+    console.log(bold(`Skipping agent download.`));
     return;
   }
 
@@ -115,17 +115,11 @@ async function fetchAgent(node: RepositoryTreeNode, destinationPath: string) {
     )
   );
 
-  console.log("");
   console.log(
     bold(
       `Agent successfully generated at ${underline(
         destinationPath
       )} using the ${underline(node.path)} template.`
-    )
-  );
-  console.log(
-    bold(
-      "Configuration instructions are described in the SETUP.md file inside the agent folder."
     )
   );
 }
@@ -158,4 +152,10 @@ export async function generateAgents(destinationPath: string) {
       await fetchAgent(agent, path.join(destinationPath, agent.path));
     }
   }
+
+  console.log(
+    bold(
+      "\nConfiguration instructions are described in the SETUP.md file inside the agent folder."
+    )
+  );
 }
