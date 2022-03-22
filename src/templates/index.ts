@@ -4,28 +4,9 @@ import fetch from "node-fetch";
 import path from "path";
 import prompts from "prompts";
 import shelljs from "shelljs";
-import format from "string-template";
 
-interface RepositoryTreeNode {
-  path: string;
-  mode: string;
-  type: string;
-  sha: string;
-  size?: number;
-  url: string;
-}
-
-interface RepositoryTree {
-  sha: string;
-  url: string;
-  tree: RepositoryTreeNode[];
-  truncated: boolean;
-}
-
-interface DirectoryFile {
-  path: string;
-  url: string;
-}
+import { getDescription } from "./descriptions";
+import { DirectoryFile, RepositoryTree, RepositoryTreeNode } from "./types";
 
 /**
  * Retrieves the folders in the repository root.
@@ -78,56 +59,42 @@ function pathHasFiles(pathStr: string) {
 }
 
 /**
- * Generates an agent based on the available templates in the
- * arbitraryexecution/forta-agent-templates github repository.
- * @param destinationPath - The path in which the forta agent project will
- *  be placed.
+ * Checks if destinationPath is empty or not and, if not, notifies the user
+ * and asks for confirmation.
+ * @param destinationPath - Path to be checked.
+ * @returns A boolean indicating whether the user agreed to write in the
+ *  specified path.
  */
-export async function generateAgent(destinationPath: string) {
+async function shouldWrite(destinationPath: string): Promise<boolean> {
   if (pathHasFiles(destinationPath)) {
     const response = await prompts({
       type: "confirm",
       name: "shouldContinue",
-      message: `The directory ${destinationPath} is not empty and files may be overwritten. Continue?`,
+      message: `The directory ${underline(
+        destinationPath
+      )} is not empty and files may be overwritten. Continue?`,
     });
 
     if (!response.shouldContinue) {
-      return;
+      return false;
     }
   }
 
-  const availableTemplates = await getTemplates();
+  return true;
+}
 
-  const templatePrompt = await prompts({
-    type: "select",
-    name: "node",
-    message: "Template:",
-    choices: availableTemplates.map((node) => ({
-      title: node.path,
-      value: node,
-    })),
-    initial: 0,
-  });
+/**
+ * Fetches an agents files based on its repository tree node.
+ * @param node - Repository tree node with information about the agent folder.
+ * @param destinationPath - Path in which the agent files should be written.
+ */
+async function fetchAgent(node: RepositoryTreeNode, destinationPath: string) {
+  if (!(await shouldWrite(destinationPath))) {
+    console.log(bold(`Skipping agent download.`));
+    return;
+  }
 
-  const configPrompt = await prompts([
-    {
-      type: "text",
-      name: "protocolName",
-      message: "Protocol name:",
-    },
-    {
-      type: "text",
-      name: "protocolAbbreviation",
-      message: "Protocol abbreviation:",
-    },
-    {
-      type: "text",
-      name: "developerAbbreviation",
-      message: "Developer abbreviation:",
-    },
-  ]);
-
-  const files = await getTemplateFiles(templatePrompt.node);
+  const files = await getTemplateFiles(node);
 
   await Promise.all(
     files.map(
@@ -148,56 +115,47 @@ export async function generateAgent(destinationPath: string) {
     )
   );
 
-  const packageJsonPath = path.join(destinationPath, "package.json");
-
-  fs.writeFileSync(
-    packageJsonPath,
-    format(fs.readFileSync(packageJsonPath).toString(), configPrompt)
-  );
-
-  // finds the configuration file regardless of whether the file is an
-  // example config or not, since some templates have an example json
-  // and others don't.
-  const configFilename = shelljs
-    .ls(destinationPath)
-    .find((el) => el.startsWith("agent-config"));
-
-  if (!configFilename) {
-    console.warn(
-      "A configuration file was not found. Skipping config file writing."
-    );
-  } else {
-    const configPath = path.join(destinationPath, configFilename);
-    const configFile = fs.readFileSync(configPath).toString();
-
-    // save the previous config file as an example config
-    fs.writeFileSync(
-      path.join(destinationPath, "agent-config.json.example"),
-      configFile
-    );
-
-    // edit the previous config file and save it as the current config file
-    fs.writeFileSync(
-      path.join(destinationPath, "agent-config.json"),
-      JSON.stringify(
-        Object.assign(JSON.parse(configFile), configPrompt),
-        null,
-        2
-      )
-    );
-  }
-
-  console.log("");
   console.log(
     bold(
       `Agent successfully generated at ${underline(
         destinationPath
-      )} using the ${underline(templatePrompt.node.path)} template.`
+      )} using the ${underline(node.path)} template.`
     )
   );
+}
+
+/**
+ * Generates an agent or more based on the available templates in the
+ * arbitraryexecution/forta-agent-templates github repository.
+ * @param destinationPath - The path in which the forta agent project(s) will
+ *  be placed.
+ */
+export async function generateAgents(destinationPath: string) {
+  const availableTemplates = await getTemplates();
+
+  const templatePrompt = await prompts({
+    type: "multiselect",
+    name: "agents",
+    message: "Templates:",
+    choices: availableTemplates.map((node) => ({
+      title: node.path,
+      value: node,
+      description: getDescription(node.path),
+    })),
+    initial: 0,
+  });
+
+  if (templatePrompt.agents.length === 1) {
+    await fetchAgent(templatePrompt.agents[0], destinationPath);
+  } else {
+    for (const agent of templatePrompt.agents) {
+      await fetchAgent(agent, path.join(destinationPath, agent.path));
+    }
+  }
+
   console.log(
     bold(
-      "Don't forget to finish setting up agent-config.js with your desired behavior!"
+      "\nConfiguration instructions are described in the SETUP.md file inside the agent folder."
     )
   );
 }
