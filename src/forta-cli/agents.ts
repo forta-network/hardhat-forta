@@ -22,7 +22,7 @@ function getAgentChoices(
 
 export async function chooseAgent(rootPath: string): Promise<string> {
   if (fs.existsSync(path.join(rootPath, "package.json"))) {
-    return path.join(rootPath, "package.json");
+    return rootPath;
   } else {
     const agentChoices = getAgentChoices(rootPath);
 
