@@ -1,5 +1,5 @@
 import fs from "fs";
-import { bold, underline } from "kleur/colors";
+import { bold, underline, green } from "kleur/colors";
 import fetch from "node-fetch";
 import path from "path";
 import prompts from "prompts";
@@ -94,6 +94,7 @@ async function fetchAgent(node: RepositoryTreeNode, destinationPath: string) {
     return;
   }
 
+  console.log(`Initializing ${node.path} template...`)
   const files = await getTemplateFiles(node);
 
   await Promise.all(
@@ -160,8 +161,8 @@ export async function generateAgents(destinationPath: string) {
 
   console.log(`You agree that your use is subject to the terms and conditions found at https://forta.org/terms-of-use/`)
   console.log(
-    bold(
+    bold(green(
       `\n**Make sure to configure the template${selectedMultipleAgents ? 's' : ''} by following SETUP.md inside the agent folder${selectedMultipleAgents ? 's' : ''}!**`
-    )
+    ))
   );
 }
