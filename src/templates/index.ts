@@ -115,11 +115,13 @@ async function fetchAgent(node: RepositoryTreeNode, destinationPath: string) {
     )
   );
 
+  console.log(`Running npm install...`)
+  shelljs.cd(destinationPath)
+  shelljs.exec("npm install")
+
   console.log(
     bold(
-      `Agent successfully generated at ${underline(
-        destinationPath
-      )} using the ${underline(node.path)} template.`
+      `Agent successfully generated at ${underline(destinationPath)} using the ${underline(node.path)} template.`
     )
   );
 }
@@ -145,17 +147,21 @@ export async function generateAgents(destinationPath: string) {
     initial: 0,
   });
 
-  if (templatePrompt.agents.length === 1) {
+  const selectedMultipleAgents = templatePrompt.agents.length > 1
+  if (!selectedMultipleAgents) {
+    // initialize the template in the root folder
     await fetchAgent(templatePrompt.agents[0], destinationPath);
   } else {
+    // create separate folders for each template
     for (const agent of templatePrompt.agents) {
       await fetchAgent(agent, path.join(destinationPath, agent.path));
     }
   }
 
+  console.log(`You agree that your use is subject to the terms and conditions found at https://forta.org/terms-of-use/`)
   console.log(
     bold(
-      "\nConfiguration instructions are described in the SETUP.md file inside the agent folder."
+      `\n**Make sure to configure the template${selectedMultipleAgents ? 's' : ''} by following SETUP.md inside the agent folder${selectedMultipleAgents ? 's' : ''}!**`
     )
   );
 }

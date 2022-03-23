@@ -1,24 +1,14 @@
 const descriptions: Record<string, string> = {
-  "account-balance":
-    "This agent monitors the account balances (in Ether) of addresses on the blockchain and creates an alert when the balance falls below a specified threshold value.",
-  "address-watch":
-    "This agent monitors blockchain transactions for those involving specific addresses, which may be either EOAs or contracts.",
-  "admin-events":
-    "This agent monitors blockchain transactions for specific events emitted from specific contract addresses.",
-  "contract-variable-monitor":
-    "This agent monitors contract variables that contain numeric values for specified contract addresses.",
-  "gnosis-safe-multisig":
-    "This agent monitors a Gnosis-Safe multi-signature contract address for events emitted and any changes in Ether or token balances.",
-  governance:
-    "This agent monitors governance contracts that use the modular system of Governance contracts available from OpenZeppelin.",
-  "monitor-function-calls":
-    "This agent monitors blockchain transactions for specific function calls from specific contract addresses, with the option to check the value of an argument against a specified value.",
-  "new-contract-interaction":
-    "This agent monitors blockchain transactions for new contracts and EOAs with few transactions interacting with specific contract addresses.",
-  "tornado-cash-monitor":
-    "This agent monitors blockchain transactions for those involving specified addresses and any address that has previously interacted with a known Tornado Cash Proxy.",
-  "transaction-failure-count":
-    "This agent monitors the number of failed transactions to a specific contract addresses.",
+  "account-balance": "Alerts when an account balance falls below a threshold",
+  "address-watch": "Alerts when a specified address is involved in a transaction",
+  "admin-events": "Alerts when specified events are emitted",
+  "contract-variable-monitor": "Alerts when numeric contract variables change by some percentage",
+  "gnosis-safe-multisig": "Alerts when a Gnosis-Safe multi-sig emits events or has balance changes",
+  "governance": "Alerts when OpenZeppelin Governance events are emitted",
+  "monitor-function-calls": "Alerts when specified functions are invoked",
+  "new-contract-interaction": "Alerts when a newly created address interacts with a specified contract",
+  "tornado-cash-monitor": "Alerts on addresses that have recently interacted with Tornado Cash",
+  "transaction-failure-count": "Alerts when there is a high number of failed transactions to a contract",
 };
 
 export function getDescription(templateName: string): string | undefined {

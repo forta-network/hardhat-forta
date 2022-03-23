@@ -1,9 +1,8 @@
 # Hardhat Forta plugin
 
 This is a Hardhat plugin that exposes access to the [Forta Agent CLI](https://docs.forta.network/en/latest/cli/)
-through hardhat, allowing forta agent project management. It also features a
-tool to generate agent projects based on [forta-agent-templates](https://github.com/arbitraryexecution/forta-agent-templates)
-templates.
+through Hardhat, allowing Forta Agent project management. It also features a
+tool to generate agent projects based on [templates](https://github.com/arbitraryexecution/forta-agent-templates).
 
 ## Installation
 
@@ -42,103 +41,117 @@ import "forta-agent-hardhat-plugin";
 
 This plugin adds the following tasks to Hardhat:
 
-- `forta-agent:init`
+- `forta:init`
 
   Similar to [`forta-agent init`](https://docs.forta.network/en/latest/cli/#init).
 
   ```
-  Usage: hardhat [GLOBAL OPTIONS] forta-agent:init [--python] [--typescript]
+  Usage: hardhat [GLOBAL OPTIONS] forta:init [--python] [--typescript]
 
   OPTIONS:
 
     --python      Initialize as Python project
     --typescript  Initialize as Typescript project
 
-  forta-agent:init: Initialize a Forta Agent project
+  forta:init: Initialize a Forta Agent project
   ```
 
-- `forta-agent:publish`
+- `forta:init:template`
+
+  Initializes an agent project based on the [forta-agent-templates](https://github.com/arbitraryexecution/forta-agent-templates) repository templates.
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta:init:template
+
+  forta:init:template: Initialize a Forta Agent project from a template
+  ```
+
+- `forta:run`
+
+  Similar to [`forta-agent run`](https://docs.forta.network/en/latest/cli/#run).
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta:run --block <STRING> [--config-file <STRING>] --file <STRING> [--nocache] --prod <STRING> --range <STRING> --tx <STRING>
+
+  OPTIONS:
+
+   --block       Run with the specified block hash/number
+   --config-file Specify a config file (default: "forta.config.json")
+   --file        Run with the specified json file
+   --nocache     Disables writing to the cache (but reads are still enabled)
+   --prod        Run a server listening for events from a Forta Scanner
+   --range       Run with the specified block range (e.g. 15..20)
+   --tx          Run with the specified transaction hash
+
+  forta:run: Run a Forta Agent with blockchain data
+  ```
+
+- `forta:test`
+
+  Runs the unit tests of a Forta Agent project
+
+  ```
+  Usage: hardhat [GLOBAL OPTIONS] forta:test
+
+  forta:test: Run unit tests for a Forta Agent
+  ```
+
+- `forta:publish`
 
   Similar to [`forta-agent publish`](https://docs.forta.network/en/latest/cli/#publish).
 
   ```
-  Usage: hardhat [GLOBAL OPTIONS] forta-agent:publish [--config-file <STRING>]
+  Usage: hardhat [GLOBAL OPTIONS] forta:publish [--config-file <STRING>]
 
   OPTIONS:
 
     --config-file Specify a config file (default: "forta.config.json")
 
-  forta-agent:publish: Publish the Forta Agent to the network
+  forta:publish: Publish a Forta Agent to the network
   ```
 
-- `forta-agent:run`
-
-  Similar to [`forta-agent run`](https://docs.forta.network/en/latest/cli/#run).
-
-  ```
-  Usage: hardhat [GLOBAL OPTIONS] forta-agent:run --block <STRING> [--config-file <STRING>] --file <STRING> [--nocache] --prod <STRING> --range <STRING> --tx <STRING>
-
-  OPTIONS:
-
-   --block       Run with the specified block hash/number 
-   --config-file Specify a config file (default: "forta.config.json")
-   --file        Run with the specified json file 
-   --nocache     Disables writing to the cache (but reads are still enabled) 
-   --prod        Run a server listening for events from a Forta Scanner 
-   --range       Run with the specified block range (e.g. 15..20) 
-   --tx          Run with the specified transaction hash 
-
-  forta-agent:run: Run the Forta Agent with latest blockchain data
-  ```
-- `forta-agent:push`
+- `forta:push`
 
   Similar to [`forta-agent push`](https://docs.forta.network/en/latest/cli/#push).
 
   ```
-  Usage:hardhat [GLOBAL OPTIONS] forta-agent:push [--config-file <STRING>]
+  Usage:hardhat [GLOBAL OPTIONS] forta:push [--config-file <STRING>]
 
   OPTIONS:
 
   --config-file Specify a config file (default: "forta.config.json")
 
-  forta-agent:push: Push the Forta Agent image to the repository
+  forta:push: Push a Forta Agent image to the repository
   ```
-- `forta-agent:disable`
+
+- `forta:disable`
 
   Similar to [`forta-agent disable`](https://docs.forta.network/en/latest/cli/#disable).
 
   ```
-  Usage: hardhat [GLOBAL OPTIONS] forta-agent:disable
+  Usage: hardhat [GLOBAL OPTIONS] forta:disable
 
-  forta-agent:disable: Disables the Forta Agent
+  forta:disable: Disable a Forta Agent
   ```
-- `forta-agent:enable`
+
+- `forta:enable`
 
   Similar to [`forta-agent enable`](https://docs.forta.network/en/latest/cli/#enable).
 
   ```
-  Usage: hardhat [GLOBAL OPTIONS] forta-agent:enable
+  Usage: hardhat [GLOBAL OPTIONS] forta:enable
 
-  forta-agent:enable: Enables the Forta Agent
+  forta:enable: Enable a Forta Agent
   ```
-- `forta-agent:keyfile`
+
+- `forta:keyfile`
 
   Similar to [`forta-agent keyfile`](https://docs.forta.network/en/latest/cli/#keyfile).
 
   ```
-  Usage: hardhat [GLOBAL OPTIONS] forta-agent:keyfile
+  Usage: hardhat [GLOBAL OPTIONS] forta:keyfile
 
-  forta-agent:keyfile: Prints out keyfile information
-  ```      
-
-- `forta-agent:generate`
-
-  Generates an agent project based on the [forta-agent-templates](https://github.com/arbitraryexecution/forta-agent-templates) repository templates.
-
-  ```
-  Usage: hardhat [GLOBAL OPTIONS] forta-agent:generate
-
-  forta-agent:generate: Generate an agent project based on templates
+  forta:keyfile: Print out keyfile information
   ```
 
 ## Environment extensions
@@ -152,9 +165,9 @@ This plugin adds an optional `forta` entry to Hardhat's config, which allows spe
 ```js
 module.exports = {
   forta: {
-    contextPath: "my_agent" // default: "agent"
-  }
-}
+    contextPath: "my-agent", // default: "agents"
+  },
+};
 ```
 
 ## Usage

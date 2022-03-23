@@ -1,8 +1,8 @@
 {
-  "name": "forta-agent-hardhat-plugin",
-  "version": "1.0.0-alpha",
+  "name": "hardhat-forta",
+  "version": "0.0.1",
   "description": "Forta Agent Hardhat Plugin",
-  "repository": "github:NethermindEth/Forta-agent-hardhat-plugin",
+  "repository": "https://github.com/forta-protocol/hardhat-forta",
   "author": "NethermindEth",
   "license": "MIT",
   "main": "dist/src/index.js",
@@ -52,7 +52,7 @@
     "hardhat": "^2.0.0"
   },
   "dependencies": {
-    "forta-agent": "file:forta-agent-0.0.39.tgz",
+    "forta-agent": "file:forta-agent-0.0.41.tgz",
     "kleur": "^4.1.4",
     "node-fetch": "^2.6.7",
     "prompts": "^2.4.2",
