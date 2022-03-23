@@ -1,5 +1,5 @@
 import fs from "fs";
-import { bold, underline, green } from "kleur/colors";
+import { bold, underline, green, blue } from "kleur/colors";
 import fetch from "node-fetch";
 import path from "path";
 import prompts from "prompts";
@@ -121,9 +121,9 @@ async function fetchAgent(node: RepositoryTreeNode, destinationPath: string) {
   shelljs.exec("npm install")
 
   console.log(
-    bold(
-      `Agent successfully generated at ${underline(destinationPath)} using the ${underline(node.path)} template.`
-    )
+    bold(blue(
+      `Agent successfully generated at ${underline(destinationPath)}`
+    ))
   );
 }
 
