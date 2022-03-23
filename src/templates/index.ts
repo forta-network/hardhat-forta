@@ -1,5 +1,5 @@
 import fs from "fs";
-import { bold, underline } from "kleur/colors";
+import { bold, underline, green, blue } from "kleur/colors";
 import fetch from "node-fetch";
 import path from "path";
 import prompts from "prompts";
@@ -94,6 +94,7 @@ async function fetchAgent(node: RepositoryTreeNode, destinationPath: string) {
     return;
   }
 
+  console.log(`Initializing ${node.path} template...`)
   const files = await getTemplateFiles(node);
 
   await Promise.all(
@@ -115,12 +116,14 @@ async function fetchAgent(node: RepositoryTreeNode, destinationPath: string) {
     )
   );
 
+  console.log(`Running npm install...`)
+  shelljs.cd(destinationPath)
+  shelljs.exec("npm install")
+
   console.log(
-    bold(
-      `Agent successfully generated at ${underline(
-        destinationPath
-      )} using the ${underline(node.path)} template.`
-    )
+    bold(blue(
+      `Agent successfully generated at ${underline(destinationPath)}`
+    ))
   );
 }
 
@@ -145,17 +148,21 @@ export async function generateAgents(destinationPath: string) {
     initial: 0,
   });
 
-  if (templatePrompt.agents.length === 1) {
+  const selectedMultipleAgents = templatePrompt.agents.length > 1
+  if (!selectedMultipleAgents) {
+    // initialize the template in the root folder
     await fetchAgent(templatePrompt.agents[0], destinationPath);
   } else {
+    // create separate folders for each template
     for (const agent of templatePrompt.agents) {
       await fetchAgent(agent, path.join(destinationPath, agent.path));
     }
   }
 
+  console.log(`You agree that your use is subject to the terms and conditions found at https://forta.org/terms-of-use/`)
   console.log(
-    bold(
-      "\nConfiguration instructions are described in the SETUP.md file inside the agent folder."
-    )
+    bold(green(
+      `\n**Make sure to configure the template${selectedMultipleAgents ? 's' : ''} by following SETUP.md inside the agent folder${selectedMultipleAgents ? 's' : ''}!**`
+    ))
   );
 }
