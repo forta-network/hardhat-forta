@@ -1,40 +1,25 @@
-# Hardhat Forta plugin
+# Forta Hardhat Plugin
 
-This is a Hardhat plugin that exposes access to the [Forta Agent CLI](https://docs.forta.network/en/latest/cli/)
-through Hardhat, allowing Forta Agent project management. It also features a
-tool to generate agent projects based on [templates](https://github.com/arbitraryexecution/forta-agent-templates).
+This is a Hardhat plugin that integrates [Forta Agent development tools](https://docs.forta.network/en/latest/cli/) enabling teams to quickly add security/operational monitoring for their smart contracts. You can either start from a sample agent project, or initialize from an existing [template](https://github.com/arbitraryexecution/forta-agent-templates). To learn more about [Forta](https://forta.org/), check out the docs [here](https://docs.forta.network).
 
 ## Installation
 
-For now, since this plugin isn't yet deployed, you can build the package, pack
-it and then install it in a hardhat project.
+You can install the Forta plugin to your Hardhat project using the following command
 
-```bash
-# Cloning the plugin
-git clone https://github.com/NethermindEth/Forta-agent-hardhat-plugin.git
-cd Forta-agent-hardhat-plugin
-
-# Building the plugin
-npm install
-npm run build
-npm pack
-
-# Installing it as a package in a hardhat project
-mv forta-hardhat-plugin-<VERSION>.tgz <PROJECT_FOLDER>
-cd <PROJECT_FOLDER>
-npm i forta-hardhat-plugin-<VERSION>.tgz
+```
+npm install -D hardhat-forta
 ```
 
-Import the plugin in your `hardhat.config.js`:
+This will install the Forta plugin as a dev dependency in your `package.json`. The last step is to update your `hardhat.config.js` file to import the plugin by adding the following line
 
-```js
-require("forta-agent-hardhat-plugin");
+```javascript
+require("hardhat-forta");
 ```
 
 Or if you are using TypeScript, in your `hardhat.config.ts`:
 
 ```ts
-import "forta-agent-hardhat-plugin";
+import "hardhat-forta";
 ```
 
 ## Tasks
@@ -43,7 +28,7 @@ This plugin adds the following tasks to Hardhat:
 
 - `forta:init`
 
-  Similar to [`forta-agent init`](https://docs.forta.network/en/latest/cli/#init).
+  Initialize a sample project. Similar to [`forta-agent init`](https://docs.forta.network/en/latest/cli/#init).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta:init [--python] [--typescript]
@@ -58,7 +43,7 @@ This plugin adds the following tasks to Hardhat:
 
 - `forta:init:template`
 
-  Initializes an agent project based on the [forta-agent-templates](https://github.com/arbitraryexecution/forta-agent-templates) repository templates.
+  Initializes an agent project based on existing [templates](https://github.com/arbitraryexecution/forta-agent-templates).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta:init:template
@@ -68,20 +53,19 @@ This plugin adds the following tasks to Hardhat:
 
 - `forta:run`
 
-  Similar to [`forta-agent run`](https://docs.forta.network/en/latest/cli/#run).
+  Runs a Forta Agent with blockchain data. Similar to [`forta-agent run`](https://docs.forta.network/en/latest/cli/#run).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta:run --block <STRING> [--config-file <STRING>] --file <STRING> [--nocache] --prod <STRING> --range <STRING> --tx <STRING>
 
   OPTIONS:
 
-   --block       Run with the specified block hash/number
-   --config-file Specify a config file (default: "forta.config.json")
-   --file        Run with the specified json file
-   --nocache     Disables writing to the cache (but reads are still enabled)
-   --prod        Run a server listening for events from a Forta Scanner
-   --range       Run with the specified block range (e.g. 15..20)
    --tx          Run with the specified transaction hash
+   --block       Run with the specified block hash/number
+   --range       Run with the specified block range (e.g. 15..20)
+   --file        Run with the specified json file
+   --config-file Specify a config file (default: "forta.config.json")
+   --nocache     Disables writing to the cache (but reads are still enabled)
 
   forta:run: Run a Forta Agent with blockchain data
   ```
@@ -98,7 +82,7 @@ This plugin adds the following tasks to Hardhat:
 
 - `forta:publish`
 
-  Similar to [`forta-agent publish`](https://docs.forta.network/en/latest/cli/#publish).
+  Deploy a Forta Agent to the network. Similar to [`forta-agent publish`](https://docs.forta.network/en/latest/cli/#publish).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta:publish [--config-file <STRING>]
@@ -112,7 +96,7 @@ This plugin adds the following tasks to Hardhat:
 
 - `forta:push`
 
-  Similar to [`forta-agent push`](https://docs.forta.network/en/latest/cli/#push).
+  Build a Forta Agent Docker image and push it to the repository. Similar to [`forta-agent push`](https://docs.forta.network/en/latest/cli/#push).
 
   ```
   Usage:hardhat [GLOBAL OPTIONS] forta:push [--config-file <STRING>]
@@ -126,7 +110,7 @@ This plugin adds the following tasks to Hardhat:
 
 - `forta:disable`
 
-  Similar to [`forta-agent disable`](https://docs.forta.network/en/latest/cli/#disable).
+  Disables a Forta Agent. Similar to [`forta-agent disable`](https://docs.forta.network/en/latest/cli/#disable).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta:disable
@@ -136,7 +120,7 @@ This plugin adds the following tasks to Hardhat:
 
 - `forta:enable`
 
-  Similar to [`forta-agent enable`](https://docs.forta.network/en/latest/cli/#enable).
+  Enables a previously disabled Forta Agent. Similar to [`forta-agent enable`](https://docs.forta.network/en/latest/cli/#enable).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta:enable
@@ -146,7 +130,7 @@ This plugin adds the following tasks to Hardhat:
 
 - `forta:keyfile`
 
-  Similar to [`forta-agent keyfile`](https://docs.forta.network/en/latest/cli/#keyfile).
+  Displays keyfile information. Similar to [`forta-agent keyfile`](https://docs.forta.network/en/latest/cli/#keyfile).
 
   ```
   Usage: hardhat [GLOBAL OPTIONS] forta:keyfile
@@ -160,7 +144,7 @@ This plugin does not extend the environment.
 
 ## Configuration
 
-This plugin adds an optional `forta` entry to Hardhat's config, which allows specifying the context path used by the Forta Agent utilities.
+This plugin adds an **optional** `forta` entry to Hardhat's config, which allows specifying the directory where your agents are located
 
 ```js
 module.exports = {
