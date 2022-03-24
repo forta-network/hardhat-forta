@@ -4,6 +4,7 @@ import fetch from "node-fetch";
 import path from "path";
 import prompts from "prompts";
 import shelljs from "shelljs";
+import { configureContainer } from "forta-agent";
 
 import { getDescription } from "./descriptions";
 import { DirectoryFile, RepositoryTree, RepositoryTreeNode } from "./types";
@@ -158,6 +159,14 @@ export async function generateAgents(destinationPath: string) {
       await fetchAgent(agent, path.join(destinationPath, agent.path));
     }
   }
+
+  const diContainer = configureContainer();
+  const initKeystore = diContainer.resolve<() => Promise<void>>("initKeystore");
+  await initKeystore()
+  const initConfig = diContainer.resolve<() => Promise<void>>("initConfig");
+  await initConfig()
+  const initKeyfile = diContainer.resolve<() => Promise<void>>("initKeyfile");
+  await initKeyfile()
 
   console.log(`You agree that your use is subject to the terms and conditions found at https://forta.org/terms-of-use/`)
   console.log(
