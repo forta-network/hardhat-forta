@@ -168,7 +168,7 @@ export async function generateAgents(destinationPath: string) {
   const initKeyfile = diContainer.resolve<() => Promise<void>>("initKeyfile");
   await initKeyfile()
 
-  console.log(`You agree that your use is subject to the terms and conditions found at https://forta.org/terms-of-use/`)
+  console.log(`You agree that your use is subject to the terms and conditions found at https://forta.org/legal`)
   console.log(
     bold(green(
       `\n**Make sure to configure the template${selectedMultipleAgents ? 's' : ''} by following SETUP.md inside the agent folder${selectedMultipleAgents ? 's' : ''}!**`
