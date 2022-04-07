@@ -1,6 +1,6 @@
 {
   "name": "hardhat-forta",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Forta Agent Hardhat Plugin",
   "repository": "https://github.com/forta-protocol/hardhat-forta",
   "license": "MIT",
@@ -51,7 +51,7 @@
     "hardhat": "^2.0.0"
   },
   "dependencies": {
-    "forta-agent": "^0.0.41",
+    "forta-agent": "^0.1.3",
     "kleur": "^4.1.4",
     "node-fetch": "^2.6.7",
     "prompts": "^2.4.2",
