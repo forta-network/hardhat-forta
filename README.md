@@ -1,5 +1,7 @@
 # Forta Hardhat Plugin
 
+[![npm version](https://badge.fury.io/js/hardhat-forta.svg)](https://badge.fury.io/js/hardhat-forta)
+
 This is a Hardhat plugin that integrates [Forta Agent development tools](https://docs.forta.network/en/latest/cli/) enabling teams to quickly add security/operational monitoring for their smart contracts. You can either start from a sample agent project, or initialize from an existing [template](https://github.com/arbitraryexecution/forta-agent-templates). To learn more about [Forta](https://forta.org/), check out the docs [here](https://docs.forta.network).
 
 ## Installation
