@@ -9,12 +9,16 @@ import { configureContainer } from "forta-agent";
 import { getDescription } from "./descriptions";
 import { DirectoryFile, RepositoryTree, RepositoryTreeNode } from "./types";
 
+const TEMPLATES_REPO_OWNER = "arbitraryexecution"
+const TEMPLATES_REPO_NAME = "forta-bot-templates"
+const TEMPLATES_REPO_COMMIT = "de5f1f272d906e3ceb8a1a2747c1600aa03a734e"
+
 /**
  * Retrieves the folders in the repository root.
  * @returns The template directory subtree SHA.
  */
 async function getTemplates(): Promise<RepositoryTreeNode[]> {
-  const treeUrl = `https://api.github.com/repos/arbitraryexecution/forta-agent-templates/git/trees/main`;
+  const treeUrl = `https://api.github.com/repos/${TEMPLATES_REPO_OWNER}/${TEMPLATES_REPO_NAME}/git/trees/${TEMPLATES_REPO_COMMIT}`;
   const directories = (await (await fetch(treeUrl)).json()) as RepositoryTree;
   const templateDirectories = directories.tree.filter((el) => {
     return el.type === "tree";
@@ -30,7 +34,7 @@ async function getTemplates(): Promise<RepositoryTreeNode[]> {
 /**
  * Retrieves data about the files inside the template directory.
  * @param templateName - The name of the template, that should also be the
- *  name of one of the directories inside the `forta-agent-templates`
+ *  name of one of the directories inside the `forta-bot-templates`
  *  repository root.
  * @returns An array containing each of the files' relative path and download
  *  url.
@@ -38,7 +42,7 @@ async function getTemplates(): Promise<RepositoryTreeNode[]> {
 async function getTemplateFiles(
   template: RepositoryTreeNode
 ): Promise<DirectoryFile[]> {
-  const templateSubtreeUrl = `https://api.github.com/repos/arbitraryexecution/forta-agent-templates/git/trees/${template.sha}?recursive=true`;
+  const templateSubtreeUrl = `https://api.github.com/repos/${TEMPLATES_REPO_OWNER}/${TEMPLATES_REPO_NAME}/git/trees/${template.sha}?recursive=true`;
   const templateSubtree = (await (
     await fetch(templateSubtreeUrl)
   ).json()) as RepositoryTree;
@@ -47,7 +51,7 @@ async function getTemplateFiles(
     .filter((el) => el.type === "blob")
     .map((el) => ({
       path: el.path,
-      url: `https://raw.githubusercontent.com/arbitraryexecution/forta-agent-templates/main/${template.path}/${el.path}`,
+      url: `https://raw.githubusercontent.com/${TEMPLATES_REPO_OWNER}/${TEMPLATES_REPO_NAME}/${TEMPLATES_REPO_COMMIT}/${template.path}/${el.path}`,
     }));
 }
 
@@ -130,7 +134,7 @@ async function fetchAgent(node: RepositoryTreeNode, destinationPath: string) {
 
 /**
  * Generates an agent or more based on the available templates in the
- * arbitraryexecution/forta-agent-templates github repository.
+ * arbitraryexecution/forta-bot-templates github repository.
  * @param destinationPath - The path in which the forta agent project(s) will
  *  be placed.
  */
@@ -148,6 +152,9 @@ export async function generateAgents(destinationPath: string) {
     })),
     initial: 0,
   });
+  if (templatePrompt.agents.length === 0) {
+    throw new Error("no templates selected")
+  }
 
   const selectedMultipleAgents = templatePrompt.agents.length > 1
   if (!selectedMultipleAgents) {
