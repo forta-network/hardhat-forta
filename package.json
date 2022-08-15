@@ -2,7 +2,7 @@
   "name": "hardhat-forta",
   "version": "0.0.3",
   "description": "Forta Agent Hardhat Plugin",
-  "repository": "https://github.com/forta-protocol/hardhat-forta",
+  "repository": "https://github.com/forta-network/hardhat-forta",
   "license": "MIT",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
